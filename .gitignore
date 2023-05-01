@@ -1,0 +1,8 @@
+/.idea
+Pipfile
+Pipfile.lock
+/selenium_tests/__pycache__/selenium_tests.cpython-310.pyc
+/selenium_tests/__pycache__
+/__pycache__
+
+
