@@ -1,7 +1,7 @@
 /.idea
 Pipfile
 Pipfile.lock
-/selenium_tests/__pycache__
 /__pycache__
+
 
 
