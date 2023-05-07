@@ -2,6 +2,9 @@
 Pipfile
 Pipfile.lock
 /selenium_tests/__pycache__
+selenium_tests/__pycache__/selenium_tests.cpython-310.pyc
+pages/__pycache__/verification_page.cpython-310.pyc
+pages/__pycache__/credentials_page.cpython-310.pyc
 
 
 

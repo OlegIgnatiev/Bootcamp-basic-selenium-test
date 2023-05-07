@@ -7,61 +7,66 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
+from pages.credentials_page import CredentialsPage
+from pages.verification_page import VerificationPage
+
 
 class TestSelenium(unittest.TestCase):
 
     def setUp(self) -> None:
         self.driver = webdriver.Chrome(service=Service(executable_path=ChromeDriverManager().install()))
         self.driver.implicitly_wait(5)
+        self.driver.get(url="https://dev.bullphishid.net/login")
+
+        self.credentials_page = CredentialsPage(driver=self.driver)
+        self.verification_page = VerificationPage(driver=self.driver)
 
     def test_login_validation(self):
-        self.driver.get(url="https://dev.bullphishid.net/login")
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-username-input"]').send_keys("emaildomain.com")
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-password-input"]').send_keys("123456789")
-        self.driver.find_element(By.XPATH, '//button[text()="Log In"]').click()
+        # Step 1. Input invalid email, incorrect password and click 'Log in'.
+        self.credentials_page.input_invalid_email()
 
-        self.assertTrue(self.driver.find_element(By.XPATH, '//div[text()="The email must be a valid email address."]'))
+        # Step 2. Invalid email error is displayed.
+        if_invalid_email_error = self.credentials_page.check_if_invalid_email_error_is_present()
+        self.assertTrue(if_invalid_email_error)
 
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-username-input"]').clear()
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-username-input"]').send_keys("oleh.admin@email.com")
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-password-input"]').clear()
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-password-input"]').send_keys("123456789")
-        self.driver.find_element(By.XPATH, '//button[text()="Log In"]').click()
+        # Step 3. Input existing email and incorrect password. Click 'Log in'.
+        self.credentials_page.input_existing_email_incorrect_password()
 
-        self.assertTrue(self.driver.find_element(By.XPATH, '//div[contains(text() , "Please check your credentials")]'))
+        # Step 4. Check credentials error is displayed.
+        if_check_your_credentials_error = self.credentials_page.check_if_check_your_credentials_error()
+        self.assertTrue(if_check_your_credentials_error)
 
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-username-input"]').clear()
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-username-input"]').send_keys("email@domain.com")
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-password-input"]').clear()
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-password-input"]').send_keys("Olegignatiev1!")
-        self.driver.find_element(By.XPATH, '//button[text()="Log In"]').click()
+        # Step 5. Input not existing email and existing password.
+        self.credentials_page.input_not_existing_email_existing_password()
 
-        self.assertTrue(self.driver.find_element(By.XPATH, '//div[contains(text() , "Please check your credentials")]'))
+        # Step 6. Check credentials error is displayed.
+        if_check_your_credential_error = self.credentials_page.check_if_check_your_credentials_error_second()
+        self.assertTrue(if_check_your_credential_error)
 
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-username-input"]').clear()
-        self.driver.find_element(By.XPATH, '//input[@data-testid="login-form-username-input"]').send_keys("Oleh.admin@email.com")
-        self.driver.find_element(By.XPATH, '//button[text()="Log In"]').click()
+        # Step 7. Input valid email and valid password.
+        self.credentials_page.input_valid_credentials()
 
-        if_element_is_present = True
-        try:
-            self.driver.find_element(By.XPATH, '//button[text()="Log In"]')
-        except NoSuchElementException:
-            if_element_is_present = False
+        # Step 8. Check 'Log in' button is not present.
+        if_element_is_present = self.credentials_page.check_if_login_button_is_not_presented_on_the_page()
         self.assertFalse(if_element_is_present)
 
-        self.driver.find_element(By.XPATH, '//input[@id ="code"]').send_keys("123456789")
-        self.driver.find_element(By.XPATH, '//button[text() ="Verify"]').click()
+        # Step 9. Input invalid 2FA code.
+        self.verification_page.input_invalid_code()
 
-        self.assertTrue(self.driver.find_element(By.XPATH, '//div[text() ="The authentication code must be 6 digits."]'))
+        # Step 10. Check error message displayed.
+        code_must_be_six_digits_error = self.verification_page.check_code_must_be_six_digits_error()
+        self.assertTrue(code_must_be_six_digits_error)
 
-        self.driver.find_element(By.XPATH, '//input[@id ="code"]').clear()
-        self.driver.find_element(By.XPATH, '//input[@id ="code"]').send_keys("000000")
-        self.driver.find_element(By.XPATH, '//button[text() ="Verify"]').click()
+        # Step 11. Input incorrect 2FA code.
+        self.verification_page.input_incorrect_code()
 
-        self.assertTrue(self.driver.find_element(By.XPATH, '//div[text() ="Invalid authentication code, please try again"]'))
+        # Step 12. Check error message displayed.
+        incorrect_code_error = self.verification_page.check_incorrect_code_error()
+        self.assertTrue(incorrect_code_error)
 
     def tearDown(self) -> None:
         self.driver.quit()
+
 
 if __name__ == "__main__":
     unittest.main()
