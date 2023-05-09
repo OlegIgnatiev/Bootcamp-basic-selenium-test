@@ -1,11 +1,4 @@
-import time
 import unittest
-
-from selenium import webdriver
-from selenium.common import NoSuchElementException
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
 
 from pages.credentials_page import CredentialsPage
 from pages.verification_page import VerificationPage
@@ -14,12 +7,9 @@ from pages.verification_page import VerificationPage
 class TestSelenium(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.driver = webdriver.Chrome(service=Service(executable_path=ChromeDriverManager().install()))
-        self.driver.implicitly_wait(5)
-        self.driver.get(url="https://dev.bullphishid.net/login")
-
-        self.credentials_page = CredentialsPage(driver=self.driver)
-        self.verification_page = VerificationPage(driver=self.driver)
+        self.credentials_page = CredentialsPage()
+        self.verification_page = VerificationPage()
+        self.credentials_page.open_url("https://dev.bullphishid.net/login")
 
     def test_login_validation(self):
         # Step 1. Input invalid email, incorrect password and click 'Log in'.
@@ -65,7 +55,7 @@ class TestSelenium(unittest.TestCase):
         self.assertTrue(incorrect_code_error)
 
     def tearDown(self) -> None:
-        self.driver.quit()
+        self.credentials_page.quite_driver()
 
 
 if __name__ == "__main__":
