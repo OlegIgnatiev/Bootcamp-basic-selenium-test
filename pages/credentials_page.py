@@ -1,4 +1,4 @@
-from selenium.common import NoSuchElementException
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
@@ -49,7 +49,7 @@ class CredentialsPage(BasePage):
         if_element_is_present = True
         try:
             self.get_element(by_locator=self.__CREDENTIALS_LOGIN_BUTTON)
-        except NoSuchElementException:
+        except TimeoutException:
             if_element_is_present = False
         return if_element_is_present
 

@@ -1,4 +1,6 @@
 from selenium import webdriver
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
@@ -9,31 +11,45 @@ class BasePage:
 
         def __init__(self):
             self.driver = webdriver.Chrome(service=Service(executable_path=ChromeDriverManager().install()))
-            self.driver.implicitly_wait(5)
+            # self.driver.implicitly_wait(5)
 
     driver = None
 
     def __init__(self):
         if not self.driver:
             BasePage.driver = BasePage.__WebDriver().driver
+        self.explicitly_wait = WebDriverWait(
+            driver=self.driver,
+            timeout=5
+        )
+
+    def open_url(self, url):
+        self.driver.get(url)
 
     def get_element(self, by_locator):
+        self.explicitly_wait.until(expected_conditions.presence_of_element_located(by_locator),
+                                   message=f"'{by_locator}' element doesnt appear on the page")
         return self.driver.find_element(*by_locator)
 
     def fill(self, by_locator, value):
+        self.explicitly_wait.until(expected_conditions.presence_of_element_located(by_locator),
+                                   message=f"'{by_locator}' element doesnt appear on the page")
         self.driver.find_element(*by_locator).send_keys(value)
 
     def click(self, by_locator):
+        self.explicitly_wait.until(expected_conditions.element_to_be_clickable(by_locator),
+                                   message=f"'{by_locator}' element doesnt appear on the page")
         self.driver.find_element(*by_locator).click()
 
     def clear(self, by_locator):
+        self.explicitly_wait.until(expected_conditions.presence_of_element_located(by_locator),
+                                   message=f"'{by_locator}' element doesnt appear on the page")
         self.driver.find_element(*by_locator).clear()
 
     def quite_driver(self):
         self.driver.quit()
 
-    def open_url(self, url):
-        self.driver.get(url)
+
 
 
 
