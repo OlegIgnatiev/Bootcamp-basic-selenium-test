@@ -28,7 +28,7 @@ class BasePage:
 
     def get_element(self, by_locator):
         self.explicitly_wait.until(expected_conditions.presence_of_element_located(by_locator),
-                                   message=f"'{by_locator}' element doesnt appear on the page")
+                                   message=f"'{by_locator}' element d oesnt appear on the page")
         return self.driver.find_element(*by_locator)
 
     def fill(self, by_locator, value):
