@@ -8,10 +8,8 @@ from selenium.webdriver.chrome.service import Service
 class BasePage:
 
     class __WebDriver:
-
         def __init__(self):
             self.driver = webdriver.Chrome(service=Service(executable_path=ChromeDriverManager().install()))
-            # self.driver.implicitly_wait(5)
 
     driver = None
 
@@ -23,7 +21,7 @@ class BasePage:
             timeout=5
         )
 
-    def open_url(self, url):
+    def get_url(self, url):
         self.driver.get(url)
 
     def get_element(self, by_locator):
@@ -42,13 +40,10 @@ class BasePage:
         self.driver.find_element(*by_locator).click()
 
     def clear(self, by_locator):
-        self.explicitly_wait.until(expected_conditions.presence_of_element_located(by_locator),
-                                   message=f"'{by_locator}' element doesnt appear on the page")
         self.driver.find_element(*by_locator).clear()
 
     def quite_driver(self):
         self.driver.quit()
-
 
 
 
