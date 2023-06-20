@@ -1,5 +1,4 @@
 import unittest
-
 from pages.credentials_page import CredentialsPage
 from pages.forgot_password_page import ForgotPasswordPage
 from pages.verification_page import VerificationPage
@@ -82,6 +81,7 @@ class TestSelenium(unittest.TestCase):
         # Step 2. Check if Forgot Password page
         if_forgot_password_page = self.forgot_password_page.check_if_forgot_password_page_opened()
         self.assertTrue(if_forgot_password_page)
+
 
         # Step 3. Click Reset button
         self.forgot_password_page.click_reset_button()

@@ -22,7 +22,7 @@ class BasePage:
         )
 
     def get_url(self, url):
-        self.driver.get(url)
+        self.driver.get("https://dev.bullphishid.net/login")
 
     def get_element(self, by_locator):
         self.explicitly_wait.until(expected_conditions.presence_of_element_located(by_locator),
@@ -40,11 +40,11 @@ class BasePage:
         self.driver.find_element(*by_locator).click()
 
     def clear(self, by_locator):
+        self.explicitly_wait.until(expected_conditions.presence_of_element_located(by_locator),
+                                   message=f"'{by_locator}' element doesnt appear on the page")
         self.driver.find_element(*by_locator).clear()
 
     def quite_driver(self):
         self.driver.quit()
-
-
 
 

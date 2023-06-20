@@ -1,6 +1,5 @@
-from selenium.common import TimeoutException, NoSuchElementException
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
-
 from pages.base_page import BasePage
 
 
