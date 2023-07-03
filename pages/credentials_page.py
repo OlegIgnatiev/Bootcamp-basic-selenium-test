@@ -30,32 +30,50 @@ class CredentialsPage(BasePage):
     def check_if_invalid_email_error_is_present(self):
         return self.get_element(by_locator=self.__CREDENTIALS_INVALID_EMAIL_ERROR)
 
+    # def input_existing_email_incorrect_password(self):
+      #  self.clear(by_locator=self.__CREDENTIALS_USERNAME_FIELD)
+       # self.fill(by_locator=self.__CREDENTIALS_USERNAME_FIELD, value="oleh.admin@email.com")
+       # self.clear(by_locator=self.__CREDENTIALS_PASSWORD_FIELD)
+       # self.fill(by_locator=self.__CREDENTIALS_PASSWORD_FIELD, value="123456789")
+       # self.click(by_locator=self.__CREDENTIALS_LOGIN_BUTTON)
     def input_existing_email_incorrect_password(self):
-        self.clear(by_locator=self.__CREDENTIALS_USERNAME_FIELD)
-        self.fill(by_locator=self.__CREDENTIALS_USERNAME_FIELD, value="oleh.admin@email.com")
-        self.clear(by_locator=self.__CREDENTIALS_PASSWORD_FIELD)
-        self.fill(by_locator=self.__CREDENTIALS_PASSWORD_FIELD, value="123456789")
-        self.click(by_locator=self.__CREDENTIALS_LOGIN_BUTTON)
+        self.clear_fill_click(by_locator_field_username=self.__CREDENTIALS_USERNAME_FIELD,
+                              value_username="oleh.admin@email.com",
+                              by_locator_field_password=self.__CREDENTIALS_PASSWORD_FIELD, value_password="123456789",
+                              by_locator_button=self.__CREDENTIALS_LOGIN_BUTTON)
 
     def check_if_check_your_credentials_error(self):
         return self.get_element(by_locator=self.__CREDENTIALS_INCORRECT_CREDENTIALS)
 
+    #def input_not_existing_email_existing_password(self):
+     #   self.clear(by_locator=self.__CREDENTIALS_USERNAME_FIELD)
+      #  self.fill(by_locator=self.__CREDENTIALS_USERNAME_FIELD,value="email@domain.com")
+       # self.clear(by_locator=self.__CREDENTIALS_PASSWORD_FIELD)
+       # self.fill(by_locator=self.__CREDENTIALS_PASSWORD_FIELD, value="Olegignatiev1!")
+       # self.click(by_locator=self.__CREDENTIALS_LOGIN_BUTTON)
+
     def input_not_existing_email_existing_password(self):
-        self.clear(by_locator=self.__CREDENTIALS_USERNAME_FIELD)
-        self.fill(by_locator=self.__CREDENTIALS_USERNAME_FIELD,value="email@domain.com")
-        self.clear(by_locator=self.__CREDENTIALS_PASSWORD_FIELD)
-        self.fill(by_locator=self.__CREDENTIALS_PASSWORD_FIELD, value="Olegignatiev1!")
-        self.click(by_locator=self.__CREDENTIALS_LOGIN_BUTTON)
+        self.clear_fill_click(by_locator_field_username=self.__CREDENTIALS_USERNAME_FIELD,
+                              value_username="email@domain.com",
+                              by_locator_field_password=self.__CREDENTIALS_PASSWORD_FIELD, value_password="Olegignatiev1!",
+                              by_locator_button=self.__CREDENTIALS_LOGIN_BUTTON)
 
     def check_if_check_your_credentials_error_second(self):
         return self.get_element(by_locator=self.__CREDENTIALS_INCORRECT_CREDENTIALS)
 
+    # def input_valid_credentials(self):
+      #  self.clear(by_locator=self.__CREDENTIALS_USERNAME_FIELD)
+       # self.fill(by_locator=self.__CREDENTIALS_USERNAME_FIELD, value="Oleh.admin@email.com")
+       # self.clear(by_locator=self.__CREDENTIALS_PASSWORD_FIELD)
+       # self.fill(by_locator=self.__CREDENTIALS_PASSWORD_FIELD, value="Olegignatiev1!")
+       # self.click(by_locator=self.__CREDENTIALS_LOGIN_BUTTON)
+
     def input_valid_credentials(self):
-        self.clear(by_locator=self.__CREDENTIALS_USERNAME_FIELD)
-        self.fill(by_locator=self.__CREDENTIALS_USERNAME_FIELD, value="Oleh.admin@email.com")
-        self.clear(by_locator=self.__CREDENTIALS_PASSWORD_FIELD)
-        self.fill(by_locator=self.__CREDENTIALS_PASSWORD_FIELD, value="Olegignatiev1!")
-        self.click(by_locator=self.__CREDENTIALS_LOGIN_BUTTON)
+        self.clear_fill_click(by_locator_field_username=self.__CREDENTIALS_USERNAME_FIELD,
+                              value_username="Oleh.admin@email.com",
+                              by_locator_field_password=self.__CREDENTIALS_PASSWORD_FIELD,
+                              value_password="Olegignatiev1!",
+                              by_locator_button=self.__CREDENTIALS_LOGIN_BUTTON)
 
     def check_if_login_button_is_not_presented_on_the_page(self):
         if_element_is_present = True
