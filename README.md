@@ -6,5 +6,5 @@ In 'pages' folder you can find three page_object files: credentials_page, forgro
 And also 'base_page' file located in 'pages' folder. This filed include exceptions, timeouts, waits and other basic logic.
 ![files in project](https://github.com/OlegIgnatiev/Bootcamp-basic-selenium-test/assets/119042843/f6d9ea4d-f897-4d69-b3ea-edfaab40535b)
 # Run tests
-To run test you should have Python3 on your machine, pipenv, files mentiond above downloaded, set route to this project and run the command:
+To run test you should have Python3 on your machine, pipenv, files mentiond in structure downloaded, set route to this project and run the command:
 python -m unittest selenium_tests/test_selenium.py
