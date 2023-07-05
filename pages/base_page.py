@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common import TimeoutException
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
@@ -31,6 +32,13 @@ class BasePage:
     def __is_element_clickable(self, by_locator) -> None:
         self.explicitly_wait.until(expected_conditions.element_to_be_clickable(by_locator),
                                    message=f"'{by_locator}' element doesnt appear on the page")
+
+    def if_element_not_present_on_the_page(self, by_locator) -> bool:
+        try:
+            self.__is_element_present(by_locator)
+        except TimeoutException:
+            if_element_presented = False
+            return if_element_presented
 
     def get_element(self, by_locator):
         self.__is_element_present(by_locator)

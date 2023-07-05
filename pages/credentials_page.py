@@ -58,12 +58,8 @@ class CredentialsPage(BasePage):
         self.click(by_locator=self.__CREDENTIALS_LOGIN_BUTTON)
 
     def check_if_login_button_is_not_presented_on_the_page(self):
-        if_element_is_present = True
-        try:
-            self.get_element(by_locator=self.__CREDENTIALS_LOGIN_BUTTON)
-        except TimeoutException:
-            if_element_is_present = False
-        return if_element_is_present
+        self.if_element_not_present_on_the_page(self.__CREDENTIALS_LOGIN_BUTTON)
+
 
 
 
