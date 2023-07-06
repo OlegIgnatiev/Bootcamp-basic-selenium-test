@@ -25,21 +25,21 @@ class TestSelenium(unittest.TestCase):
         self.assertTrue(if_password_field_is_required)
 
         # Step 3. Input invalid email, incorrect password and click 'Log in'.
-        self.credentials_page.input_invalid_email()
+        self.credentials_page.input_credentials_and_submit(login_value='emaildomain.com', password_value='123456789')
 
         # Step 4. Invalid email error is displayed.
         if_invalid_email_error_is_displayed = self.credentials_page.check_if_invalid_email_error_is_present()
         self.assertTrue(if_invalid_email_error_is_displayed)
 
         # Step 5. Input valid email and incorrect password. Click 'Log in'.
-        self.credentials_page.input_existing_email_incorrect_password()
+        self.credentials_page.input_credentials_and_submit(login_value='oleh.admin@email.com', password_value='123456789')
 
         # Step 6. Check credentials error is displayed.
         if_credentials_error_is_displayed = self.credentials_page.check_if_check_your_credentials_error()
         self.assertTrue(if_credentials_error_is_displayed)
 
         # Step 7. Input not existing email and existing password.
-        self.credentials_page.input_not_existing_email_existing_password()
+        self.credentials_page.input_credentials_and_submit(login_value='email@domain.com', password_value='Olegignatiev1!')
 
         # Step 8. Check credentials error is displayed.
         if_credentials_error_displayed_second = self.credentials_page.check_if_check_your_credentials_error_second()
@@ -47,7 +47,7 @@ class TestSelenium(unittest.TestCase):
 
     def test_2fa_verification(self):
         # Step 1. Input valid email and valid password.
-        self.credentials_page.input_valid_credentials()
+        self.credentials_page.input_credentials_and_submit(login_value='Oleh.admin@email.com', password_value='Olegignatiev1!')
 
         # Step 2. Check 'Log in' button is not present.
         if_element_is_present = self.credentials_page.check_if_login_button_is_not_presented_on_the_page()
@@ -61,14 +61,14 @@ class TestSelenium(unittest.TestCase):
         self.assertTrue(if_authentication_code_is_required)
 
         # Step 5. Input invalid 2FA code.
-        self.verification_page.input_invalid_code()
+        self.verification_page.input_security_code_and_submit(security_value='123456789')
 
         # Step 6. Check code must be 6 digits error message displayed.
         if_authentication_code_6_digits = self.verification_page.check_code_must_be_six_digits_error()
         self.assertTrue(if_authentication_code_6_digits)
 
         # Step 7. Input incorrect 2FA code.
-        self.verification_page.input_incorrect_code()
+        self.verification_page.input_security_code_and_submit(security_value='000000')
 
         # Step 8. Check error message displayed.
         if_invalid_authentication_code = self.verification_page.check_incorrect_code_error()
@@ -90,7 +90,7 @@ class TestSelenium(unittest.TestCase):
         self.assertTrue(if_forgot_email_field_required)
 
         # Step 5. Input invalid forgot email.
-        self.forgot_password_page.input_invalid_forgot_email()
+        self.forgot_password_page.input_invalid_forgot_email_and_submit(invalid_forgot_email_value='emaildomain.com')
 
         # Step 6. Check if invalid forgot email error displayed.
         if_invalid_forgot_email = self.forgot_password_page.check_invalid_forgot_email_error_displayed()
