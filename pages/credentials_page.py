@@ -19,7 +19,7 @@ class CredentialsPage(BasePage):
 
     def check_if_appropriate_error_displayed(self, expected_text: str):
         """
-        Check that email field required.
+        Check that appropriate error displayed.
         """
         text_locator = (By.XPATH, self.__CREDENTIALS_ERROR.format(expected_text=expected_text))
         return self.get_element(text_locator)

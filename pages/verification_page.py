@@ -18,7 +18,7 @@ class VerificationPage(BasePage):
 
     def check_that_appropriate_verification_error(self, expected_text: str):
         """
-        Check that Verification Field is required error displayed.
+        Check that appropriate error displayed.
         """
         text_locator = (
             By.XPATH, self.__VERIFICATION_ERROR.format(expected_text=expected_text))
