@@ -4,12 +4,11 @@ from pages.base_page import BasePage
 
 
 class VerificationPage(BasePage):
-
+    # static xpath. used as is
     __VERIFICATION_CODE_FIELD = (By.XPATH, '//input[@id ="code"]')
     __VERIFICATION_VERIFY_BUTTON = (By.XPATH, '//button[text() ="Verify"]')
-    __VERIFICATION_SIX_DIGITS_ERROR = (By.XPATH, '//div[text() ="The authentication code must be 6 digits."]')
-    __VERIFICATION_INCORRECT_CODE_ERROR = (By.XPATH, '//div[text() ="Invalid authentication code, please try again"]')
-    __VERIFICATION_CODE_FIELD_REQUIRED_ERROR = (By.XPATH, '//div[text() = "The authentication code is required."]')
+    # dynamic xpath. should be transformed to (By.XPATH, "xpath") before use
+    __VERIFICATION_ERROR = "//div[contains(text(), '{expected_text}')]"
 
     def click_verify_button(self):
         """
@@ -21,19 +20,25 @@ class VerificationPage(BasePage):
         """
         Check that Verification Field is required error displayed.
         """
-        return self.get_element(by_locator=self.__VERIFICATION_CODE_FIELD_REQUIRED_ERROR)
+        text_locator = (
+            By.XPATH, self.__VERIFICATION_ERROR.format(expected_text="The authentication code is required."))
+        return self.get_element(text_locator)
 
     def check_code_must_be_six_digits_error(self):
         """
         Check that Code Must Be 6 Digits error displayed.
         """
-        return self.get_element(by_locator=self.__VERIFICATION_SIX_DIGITS_ERROR)
+        text_locator = (
+            By.XPATH, self.__VERIFICATION_ERROR.format(expected_text="The authentication code must be 6 digits."))
+        return self.get_element(text_locator)
 
     def check_incorrect_code_error(self):
         """
         Check that Incorrect Code error displayed.
         """
-        return self.get_element(by_locator=self.__VERIFICATION_INCORRECT_CODE_ERROR)
+        text_locator = (
+            By.XPATH, self.__VERIFICATION_ERROR.format(expected_text="Invalid authentication code, please try again"))
+        return self.get_element(text_locator)
 
     def input_security_code_and_submit(self, security_value: str):
         """

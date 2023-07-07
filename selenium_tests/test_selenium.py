@@ -13,36 +13,36 @@ class TestSelenium(unittest.TestCase):
 
         self.credentials_page.get_url(url="https://dev.bullphishid.net/login")
 
-    def test_login_validation(self):
+    def test_login_validation_credentials(self):
 
-        # Step 1. Click Log In button
+        # Step 1. When I click Log In button with empty login and password fields on Login page
         self.credentials_page.click_log_in_button()
 
-        # Step2. Check if email and password fields are required.
+        # Step2. Then I see the messages that email and password fields are required on Login page
         if_email_field_is_required = self.credentials_page.check_if_email_field_required()
         self.assertTrue(if_email_field_is_required)
         if_password_field_is_required = self.credentials_page.check_if_password_field_required()
         self.assertTrue(if_password_field_is_required)
 
-        # Step 3. Input invalid email, incorrect password and click 'Log in'.
+        # Step 3. When I input invalid email, incorrect password and click 'Log in' on Login page
         self.credentials_page.input_credentials_and_submit(login_value='emaildomain.com', password_value='123456789')
 
-        # Step 4. Invalid email error is displayed.
+        # Step 4. Then I see that invalid email error is displayed on Login page
         if_invalid_email_error_is_displayed = self.credentials_page.check_if_invalid_email_error_is_present()
         self.assertTrue(if_invalid_email_error_is_displayed)
 
-        # Step 5. Input valid email and incorrect password. Click 'Log in'.
+        # Step 5. When I input valid email and incorrect password and Click 'Log in' on Login page
         self.credentials_page.input_credentials_and_submit(login_value='oleh.admin@email.com', password_value='123456789')
 
-        # Step 6. Check credentials error is displayed.
+        # Step 6. Then I see that credentials error is displayed on Login page
         if_credentials_error_is_displayed = self.credentials_page.check_if_check_your_credentials_error()
         self.assertTrue(if_credentials_error_is_displayed)
 
-        # Step 7. Input not existing email and existing password.
+        # Step 7. When I input not existing email and existing password on Login page
         self.credentials_page.input_credentials_and_submit(login_value='email@domain.com', password_value='Olegignatiev1!')
 
-        # Step 8. Check credentials error is displayed.
-        if_credentials_error_displayed_second = self.credentials_page.check_if_check_your_credentials_error_second()
+        # Step 8. Then I see that credentials error is displayed on Login page
+        if_credentials_error_displayed_second = self.credentials_page.check_if_check_your_credentials_error()
         self.assertTrue(if_credentials_error_displayed_second)
 
     def test_2fa_verification(self):
