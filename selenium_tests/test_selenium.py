@@ -19,30 +19,36 @@ class TestSelenium(unittest.TestCase):
         self.credentials_page.click_log_in_button()
 
         # Step2. Then I see the messages that email and password fields are required on Login page
-        if_email_field_is_required = self.credentials_page.check_if_email_field_required()
+        """
+        Check that email field required.
+        """
+        if_email_field_is_required = self.credentials_page.check_if_appropriate_error_displayed(expected_text="The email field is required.")
         self.assertTrue(if_email_field_is_required)
-        if_password_field_is_required = self.credentials_page.check_if_password_field_required()
+        """
+        Check that Password field required.
+        """
+        if_password_field_is_required = self.credentials_page.check_if_appropriate_error_displayed(expected_text="The password field is required.")
         self.assertTrue(if_password_field_is_required)
 
         # Step 3. When I input invalid email, incorrect password and click 'Log in' on Login page
         self.credentials_page.input_credentials_and_submit(login_value='emaildomain.com', password_value='123456789')
 
         # Step 4. Then I see that invalid email error is displayed on Login page
-        if_invalid_email_error_is_displayed = self.credentials_page.check_if_invalid_email_error_is_present()
+        if_invalid_email_error_is_displayed = self.credentials_page.check_if_appropriate_error_displayed(expected_text="The email must be a valid email address.")
         self.assertTrue(if_invalid_email_error_is_displayed)
 
         # Step 5. When I input valid email and incorrect password and Click 'Log in' on Login page
         self.credentials_page.input_credentials_and_submit(login_value='oleh.admin@email.com', password_value='123456789')
 
         # Step 6. Then I see that credentials error is displayed on Login page
-        if_credentials_error_is_displayed = self.credentials_page.check_if_check_your_credentials_error()
+        if_credentials_error_is_displayed = self.credentials_page.check_if_appropriate_error_displayed(expected_text="Please check your credentials")
         self.assertTrue(if_credentials_error_is_displayed)
 
         # Step 7. When I input not existing email and existing password on Login page
         self.credentials_page.input_credentials_and_submit(login_value='email@domain.com', password_value='Olegignatiev1!')
 
         # Step 8. Then I see that credentials error is displayed on Login page
-        if_credentials_error_displayed_second = self.credentials_page.check_if_check_your_credentials_error()
+        if_credentials_error_displayed_second = self.credentials_page.check_if_appropriate_error_displayed(expected_text="Please check your credentials")
         self.assertTrue(if_credentials_error_displayed_second)
 
     def test_2fa_verification(self):
@@ -57,21 +63,21 @@ class TestSelenium(unittest.TestCase):
         self.verification_page.click_verify_button()
 
         # Step 4. Check that verification field is required
-        if_authentication_code_is_required = self.verification_page.check_that_verification_field_is_required()
+        if_authentication_code_is_required = self.verification_page.check_that_appropriate_verification_error(expected_text="The authentication code is required.")
         self.assertTrue(if_authentication_code_is_required)
 
         # Step 5. Input invalid 2FA code.
         self.verification_page.input_security_code_and_submit(security_value='123456789')
 
         # Step 6. Check code must be 6 digits error message displayed.
-        if_authentication_code_6_digits = self.verification_page.check_code_must_be_six_digits_error()
+        if_authentication_code_6_digits = self.verification_page.check_that_appropriate_verification_error(expected_text="The authentication code must be 6 digits.")
         self.assertTrue(if_authentication_code_6_digits)
 
         # Step 7. Input incorrect 2FA code.
         self.verification_page.input_security_code_and_submit(security_value='000000')
 
         # Step 8. Check error message displayed.
-        if_invalid_authentication_code = self.verification_page.check_incorrect_code_error()
+        if_invalid_authentication_code = self.verification_page.check_that_appropriate_verification_error(expected_text="Invalid authentication code, please try again")
         self.assertTrue(if_invalid_authentication_code)
 
     def test_reset_password(self):

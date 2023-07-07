@@ -17,32 +17,11 @@ class CredentialsPage(BasePage):
         """
         self.click(by_locator=self.__CREDENTIALS_LOGIN_BUTTON)
 
-    def check_if_email_field_required(self):
+    def check_if_appropriate_error_displayed(self, expected_text: str):
         """
         Check that email field required.
         """
-        text_locator = (By.XPATH, self.__CREDENTIALS_ERROR.format(expected_text="The email field is required."))
-        return self.get_element(text_locator)
-
-    def check_if_password_field_required(self):
-        """
-        Check that Password field required.
-        """
-        text_locator = (By.XPATH, self.__CREDENTIALS_ERROR.format(expected_text="The password field is required."))
-        return self.get_element(text_locator)
-
-    def check_if_invalid_email_error_is_present(self):
-        """
-        Check that Invalid Email Error displayed.
-        """
-        text_locator = (By.XPATH, self.__CREDENTIALS_ERROR.format(expected_text="The email must be a valid email address."))
-        return self.get_element(text_locator)
-
-    def check_if_check_your_credentials_error(self):
-        """
-        Check that Incorrect Credentials Error displayed.
-        """
-        text_locator = (By.XPATH, self.__CREDENTIALS_ERROR.format(expected_text="Please check your credentials"))
+        text_locator = (By.XPATH, self.__CREDENTIALS_ERROR.format(expected_text=expected_text))
         return self.get_element(text_locator)
 
     def check_if_login_button_is_not_presented_on_the_page(self):
