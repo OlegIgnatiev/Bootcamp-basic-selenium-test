@@ -1,4 +1,3 @@
-from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
@@ -22,13 +21,13 @@ class CredentialsPage(BasePage):
         Check that appropriate error displayed.
         """
         text_locator = (By.XPATH, self.__CREDENTIALS_ERROR.format(expected_text=expected_text))
-        return self.get_element(text_locator)
+        return self.if_element_displayed(by_locator=text_locator)
 
     def check_if_login_button_is_not_presented_on_the_page(self):
         """
         Check if Login button not on the page.
         """
-        self.if_element_not_present_on_the_page(self.__CREDENTIALS_LOGIN_BUTTON)
+        return self.if_element_not_present_on_the_page(self.__CREDENTIALS_LOGIN_BUTTON)
 
     def input_credentials_and_submit(self, login_value: str, password_value: str):
         """

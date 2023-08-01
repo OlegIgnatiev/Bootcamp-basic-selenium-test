@@ -22,7 +22,7 @@ class VerificationPage(BasePage):
         """
         text_locator = (
             By.XPATH, self.__VERIFICATION_ERROR.format(expected_text=expected_text))
-        return self.get_element(text_locator)
+        return self.if_element_displayed(by_locator=text_locator)
 
     def input_security_code_and_submit(self, security_value: str):
         """
