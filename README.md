@@ -5,7 +5,8 @@ In 'selenium_tests' folder you can find 'test_selenium.py' file with assertions,
 In 'pages' folder you can find three page_object files: credentials_page, forgrot_password_page, Verification_page. These files describe methods, behaviour and logic.
 And also 'base_page' file located in 'pages' folder. This filed include exceptions, timeouts, waits and other basic logic.
 
-![files in project](https://github.com/OlegIgnatiev/Bootcamp-basic-selenium-test/assets/119042843/f6d9ea4d-f897-4d69-b3ea-edfaab40535b)
+
+![bdd structure](https://github.com/OlegIgnatiev/Bootcamp-basic-selenium-test/assets/119042843/d76c0754-3d99-46e9-8256-bf78c3efec50)
 # Run tests Unittest
 To run a test you should have Python3 on your machine, pipenv, files mentioned in structure downloaded, set route to this project and run the command:
 python -m unittest selenium_tests/test_selenium.py
