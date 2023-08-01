@@ -12,5 +12,5 @@ python -m unittest selenium_tests/test_selenium.py
 
 # Structure and using BDD framework
 This stack using: behave, selenium, pyhamcrest
-To use it, you should have Python3 on your machine, pipenv, files mentioned in structure downloaded, set route to this project and run the command: invoke run. Also you can set parameters to choose test scenario by tag and browser. For example: "invoke run --tags:mfa --browser=CH_HL". This command will start MFA test without opening browser.
+To use it, you should have Python3 on your machine, pipenv, files mentioned in structure downloaded, set route to this project and run the command: invoke run. Also you can set parameters to choose test scenario by tag and browser. For example: **invoke run --tags:mfa --browser=CH_HL**. This command will start MFA test without opening browser.
 
